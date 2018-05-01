@@ -6,9 +6,7 @@ mod robot;
 use engine::Engine;
 use setup::Setup;
 
-
 const INPUT_FILE: &str = "input.txt";
-
 
 fn main() {
     let setup = Setup::read_from_file(INPUT_FILE);

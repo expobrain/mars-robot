@@ -2,16 +2,14 @@ use std::fs::File;
 use std::path::Path;
 use std::io::prelude::*;
 
-use robot::{Instructions,};
-use engine::{Point, Size, Vector, Movements};
-
+use robot::Instructions;
+use engine::{Movements, Point, Size, Vector};
 
 #[derive(Debug)]
 pub struct Setup {
     pub size: Size,
-    pub instructions: Vec<Instructions>
+    pub instructions: Vec<Instructions>,
 }
-
 
 fn parse_size(buffer: &str) -> Size {
     let values = buffer
@@ -24,7 +22,6 @@ fn parse_size(buffer: &str) -> Size {
 
     Size::new(values[0], values[1])
 }
-
 
 fn parse_instructions(buffer: &str) -> Vec<Instructions> {
     let mut instructions = Vec::new();
@@ -60,13 +57,9 @@ fn parse_instructions(buffer: &str) -> Vec<Instructions> {
     instructions
 }
 
-
 impl Setup {
     fn new(size: Size, instructions: Vec<Instructions>) -> Self {
-        Setup{
-            size,
-            instructions
-        }
+        Setup { size, instructions }
     }
 
     pub fn read_from_file(filename: &str) -> Self {
@@ -76,7 +69,7 @@ impl Setup {
 
         let _ = match File::open(&path) {
             Ok(mut f) => f.read_to_string(&mut buffer),
-            Err(e) => panic!("{}", e)
+            Err(e) => panic!("{}", e),
         };
 
         // Read settings

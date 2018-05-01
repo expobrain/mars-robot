@@ -1,42 +1,38 @@
 use std::fmt;
 
-use terrain::{Terrain};
-use engine::{Point, Vector, Movements};
-
+use engine::{Movements, Point, Vector};
+use terrain::Terrain;
 
 #[derive(Debug, Clone)]
 pub struct Instructions {
     pub start: Point,
     pub direction: Vector,
-    pub movements: Vec<Movements>
+    pub movements: Vec<Movements>,
 }
-
 
 #[derive(Debug)]
 pub struct Robot {
     pos: Point,
     direction: Vector,
-    lost: bool
+    lost: bool,
 }
-
 
 impl Instructions {
     pub fn new(start: Point, direction: Vector, movements: Vec<Movements>) -> Self {
-        Instructions{
+        Instructions {
             start,
             direction,
-            movements
+            movements,
         }
     }
 }
 
-
 impl Robot {
     pub fn new(pos: Point, direction: Vector) -> Self {
-        Robot{
+        Robot {
             pos,
             direction,
-            lost: false
+            lost: false,
         }
     }
 
@@ -61,7 +57,6 @@ impl Robot {
         }
     }
 }
-
 
 impl fmt::Display for Robot {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

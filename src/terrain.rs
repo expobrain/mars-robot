@@ -1,14 +1,12 @@
 use engine::{Point, Size, Vector};
 
-
 #[derive(Debug, PartialEq)]
 struct Lost(Vector);
 
-
 #[derive(Debug)]
-pub struct Terrain{
+pub struct Terrain {
     size: Size,
-    grid: Box<[Option<Lost>]>
+    grid: Box<[Option<Lost>]>,
 }
 
 impl Terrain {
@@ -20,17 +18,15 @@ impl Terrain {
             grid_vec.push(None);
         }
 
-        Terrain{
+        Terrain {
             size,
-            grid: grid_vec.into_boxed_slice()
+            grid: grid_vec.into_boxed_slice(),
         }
     }
 
     pub fn includes(&self, point: Point) -> bool {
-        point.x >= 0
-        && point.y >= 0
-        && i16::from(point.x) <= i16::from(self.size.w)
-        && i16::from(point.y) <= i16::from(self.size.h)
+        point.x >= 0 && point.y >= 0 && i16::from(point.x) <= i16::from(self.size.w)
+            && i16::from(point.y) <= i16::from(self.size.h)
     }
 
     pub fn has_scent(&self, pos: Point, dir: Vector) -> bool {
