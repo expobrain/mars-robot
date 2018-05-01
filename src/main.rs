@@ -7,7 +7,7 @@ use engine::Engine;
 use setup::Setup;
 
 
-const INPUT_FILE: &'static str = "input.txt";
+const INPUT_FILE: &str = "input.txt";
 
 
 fn main() {

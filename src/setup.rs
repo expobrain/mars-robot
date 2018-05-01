@@ -64,8 +64,8 @@ fn parse_instructions(buffer: &str) -> Vec<Instructions> {
 impl Setup {
     fn new(size: Size, instructions: Vec<Instructions>) -> Self {
         Setup{
-            size: size,
-            instructions: instructions
+            size,
+            instructions
         }
     }
 

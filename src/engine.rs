@@ -92,7 +92,7 @@ impl FromStr for Vector {
 
 impl Point {
     pub fn new(x: i8, y: i8) -> Self {
-        Point{x: x, y: y}
+        Point{x, y}
     }
 }
 
@@ -108,7 +108,7 @@ impl AddAssign<Vector> for Point {
 
 impl Size {
     pub fn new(w: u8, h: u8) -> Self {
-        Size{w: w, h: h}
+        Size{w, h}
     }
 }
 
@@ -122,16 +122,15 @@ impl Engine {
     pub fn with_size(size: &Size) -> Self {
         let terrain = Terrain::with_size(*size);
 
-        Engine{terrain: terrain}
+        Engine{terrain}
     }
 
     pub fn run_instructions(&mut self, instructions: &Instructions) {
         let mut robot = Robot::new(instructions.start, instructions.direction);
 
-        for movement in instructions.movements.iter() {
-            match robot.update(&mut self.terrain, *movement) {
-                Err(_) => break,
-                _ => {}
+        for movement in &instructions.movements {
+            if robot.update(&mut self.terrain, *movement).is_err() {
+                break
             };
         }
 

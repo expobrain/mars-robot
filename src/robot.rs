@@ -23,9 +23,9 @@ pub struct Robot {
 impl Instructions {
     pub fn new(start: Point, direction: Vector, movements: Vec<Movements>) -> Self {
         Instructions{
-            start: start,
-            direction: direction,
-            movements: movements
+            start,
+            direction,
+            movements
         }
     }
 }
@@ -34,8 +34,8 @@ impl Instructions {
 impl Robot {
     pub fn new(pos: Point, direction: Vector) -> Self {
         Robot{
-            pos: pos,
-            direction: direction,
+            pos,
+            direction,
             lost: false
         }
     }
@@ -48,19 +48,16 @@ impl Robot {
             pos += direction;
         }
 
-        match terrain.includes(pos) {
-            true => {
-                self.direction = direction;
-                self.pos = pos;
+        if terrain.includes(pos) {
+            self.direction = direction;
+            self.pos = pos;
 
-                Ok(())
-            },
-            false => {
-                self.lost = true;
-                terrain.set_scent(self.pos, direction);
+            Ok(())
+        } else {
+            self.lost = true;
+            terrain.set_scent(self.pos, direction);
 
-                Err("Robot lost")
-            }
+            Err("Robot lost")
         }
     }
 }
@@ -68,9 +65,10 @@ impl Robot {
 
 impl fmt::Display for Robot {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self.lost {
-            true  => write!(f, "{} {} {} LOST", self.pos.x, self.pos.y, self.direction),
-            false => write!(f, "{} {} {}", self.pos.x, self.pos.y, self.direction)
+        if self.lost {
+            write!(f, "{} {} {} LOST", self.pos.x, self.pos.y, self.direction)
+        } else {
+            write!(f, "{} {} {}", self.pos.x, self.pos.y, self.direction)
         }
     }
 }

@@ -21,7 +21,7 @@ impl Terrain {
         }
 
         Terrain{
-            size: size,
+            size,
             grid: grid_vec.into_boxed_slice()
         }
     }
@@ -29,30 +29,28 @@ impl Terrain {
     pub fn includes(&self, point: Point) -> bool {
         point.x >= 0
         && point.y >= 0
-        && point.x as i16 <= self.size.w as i16
-        && point.y as i16 <= self.size.h as i16
+        && i16::from(point.x) <= i16::from(self.size.w)
+        && i16::from(point.y) <= i16::from(self.size.h)
     }
 
     pub fn has_scent(&self, pos: Point, dir: Vector) -> bool {
-        match self.includes(pos) {
-            false => panic!("Point non inside the map"),
-            true => {
-                let index = self.index_from_pos(pos);
-
-                self.grid[index] == Some(Lost(dir))
-            }
+        if !self.includes(pos) {
+            panic!("Point non inside the map")
         }
+
+        let index = self.index_from_pos(pos);
+
+        self.grid[index] == Some(Lost(dir))
     }
 
     pub fn set_scent(&mut self, pos: Point, dir: Vector) {
-        match self.includes(pos) {
-            false => panic!("Point {:?} non inside the map"),
-            true => {
-                let index = self.index_from_pos(pos);
+        if !self.includes(pos) {
+            panic!("Point {:?} non inside the map", pos)
+        }
 
-                self.grid[index] = Some(Lost(dir))
-            }
-        };
+        let index = self.index_from_pos(pos);
+
+        self.grid[index] = Some(Lost(dir))
     }
 
     fn index_from_pos(&self, pos: Point) -> usize {
